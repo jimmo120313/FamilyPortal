@@ -1,8 +1,9 @@
 import React from "react";
-import logo from "./logo.svg";
+import {Header, Icon} from 'semantic-ui-react';
 import "./App.css";
 import { Component } from "react";
 import Axios from "axios";
+
 
 class App extends Component {
   state = {
@@ -21,15 +22,17 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+      <div>
+        <Header>
+          <Icon name='users' />
+          <Header.Content>Family Portal</Header.Content>
+        </Header>
           <ul>
             {this.state.values.map((value: any) => {
-              return <li>{value.name}</li>;
+              return <li key={value.Id}>{value.name}</li>;
             })}
           </ul>
-        </header>
+        
       </div>
     );
   }

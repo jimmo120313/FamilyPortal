@@ -14,7 +14,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 exports.__esModule = true;
 var react_1 = require("react");
-var logo_svg_1 = require("./logo.svg");
+var semantic_ui_react_1 = require("semantic-ui-react");
 require("./App.css");
 var react_2 = require("react");
 var axios_1 = require("axios");
@@ -36,12 +36,13 @@ var App = /** @class */ (function (_super) {
         });
     };
     App.prototype.render = function () {
-        return (react_1["default"].createElement("div", { className: "App" },
-            react_1["default"].createElement("header", { className: "App-header" },
-                react_1["default"].createElement("img", { src: logo_svg_1["default"], className: "App-logo", alt: "logo" }),
-                react_1["default"].createElement("ul", null, this.state.values.map(function (value) {
-                    return react_1["default"].createElement("li", null, value.name);
-                })))));
+        return (react_1["default"].createElement("div", null,
+            react_1["default"].createElement(semantic_ui_react_1.Header, null,
+                react_1["default"].createElement(semantic_ui_react_1.Icon, { name: 'users' }),
+                react_1["default"].createElement(semantic_ui_react_1.Header.Content, null, "Family Portal")),
+            react_1["default"].createElement("ul", null, this.state.values.map(function (value) {
+                return react_1["default"].createElement("li", { key: value.Id }, value.name);
+            }))));
     };
     return App;
 }(react_2.Component));
