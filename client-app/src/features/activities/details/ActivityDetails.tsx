@@ -1,15 +1,15 @@
 import React from "react";
 import { Button, Card, Image } from "semantic-ui-react";
-import { VoidExpression } from "typescript";
 import { IActivity } from "../../../app/models/activity";
 
 interface IProps {
   activity: IActivity;
   setEditMode:(editMode:boolean)=>void;
   setSelectedActivities:(activity:IActivity|null)=>void;
+  submitting:boolean;
 }
 
-export const ActivityDetails: React.FC<IProps> = ({ activity,setEditMode,setSelectedActivities }) => {
+export const ActivityDetails: React.FC<IProps> = ({ activity,setEditMode,setSelectedActivities ,submitting}) => {
   return (
     <Card fluid>
       <Image src={`/assets/categoryImages/${activity.category}.jpg`} wrapped ui={false} />

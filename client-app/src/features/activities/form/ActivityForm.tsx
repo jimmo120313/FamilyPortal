@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, {  useState } from "react";
 import { FormEvent } from "react";
 import { Button, Form, Segment } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/activity";
@@ -9,14 +9,15 @@ interface IProps {
   activity: IActivity;
   createActivity:(activity:IActivity)=>void;
   editActivity:(activity:IActivity)=>void; 
-  
+  submitting:boolean;
 }
 
 export const ActivityForm: React.FC<IProps> = ({
   setEditMode,
   activity: initialFormState,
   createActivity,
-  editActivity
+  editActivity,
+  submitting
 }) => {
   const initializeForm = () => {
     if (initialFormState) {
@@ -39,6 +40,7 @@ export const ActivityForm: React.FC<IProps> = ({
     setActivity({ ...activity, [name]: value });
   };
   const handleSubmit=()=>{
+    debugger;
     if(activity.id.length===0){
         let newActivity={
             ...activity,
@@ -64,7 +66,8 @@ export const ActivityForm: React.FC<IProps> = ({
         <Form.Input placeholder="City" name="city" onChange={handleInputChange}  value={activity.city} />
         <Form.Input placeholder="Venue" name="venue" onChange={handleInputChange}  value={activity.venue} />
         <Button
-          onClick={() => setEditMode(false)}
+          // onClick={() => {debugger;setEditMode(false)}}
+          loading={submitting}
           floated="right"
           positive
           type="submit"
