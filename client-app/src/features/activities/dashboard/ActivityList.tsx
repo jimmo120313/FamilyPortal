@@ -1,26 +1,27 @@
-import React, { SyntheticEvent } from "react";
+import { observer } from "mobx-react-lite";
+import React, { SyntheticEvent, useState } from 'react';
 import { Item, Button, Label, Segment } from "semantic-ui-react";
+import ActivityStore from "../../../app/stores/activityStore";
 import { IActivity } from "../../../app/models/activity";
+import { useStore } from "../../../app/stores/store";
 
-interface IProps {
-  activities: IActivity[];
-  selectActivity: (id: string) => void;
-  deleteActivity:(e:SyntheticEvent<HTMLButtonElement>,id:string)=>void;
-  submitting:boolean;
-  target:string;
-}
 
-export const ActivityList: React.FC<IProps> = ({
-  activities,
-  selectActivity,
-  deleteActivity,
-  submitting,
-  target
-}) => {
+export default observer(function ActivityList() {
+
+  const {activityStore} = useStore();
+  const {deleteActivity, activitiesByDate, loading} = activityStore;
+
+  const [target, setTarget] = useState('');
+
+  function handleActivityDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
+    setTarget(e.currentTarget.name);
+    deleteActivity(id);
+  }
+  
   return (
     <Segment clearing>
       <Item.Group divided>
-        {activities.map((act) => (
+        {activitiesByDate.map(act => (
           <Item key={act.id}>
             <Item.Content>
               <Item.Header as="a">{act.title}</Item.Header>
@@ -33,17 +34,17 @@ export const ActivityList: React.FC<IProps> = ({
               </Item.Description>
               <Item.Extra>
                 <Button
-                  onClick={() => selectActivity(act.id)}
+                  onClick={() => activityStore.selectActivity(act.id)}
                   floated="right"
-                  content="view"
+                  content="View"
                   color="blue"
                 ></Button>
                   <Button
                   name={act.id}
-                  loading={target === act.id && submitting}
-                  onClick={(e) => deleteActivity(e,act.id)}
+                  
+                  onClick={(e) => deleteActivity(act.id)}
                   floated="right"
-                  content="delete"
+                  content="Delete"
                   color="red"
                 ></Button>
                 <Label basic content={act.category} />
@@ -54,4 +55,5 @@ export const ActivityList: React.FC<IProps> = ({
       </Item.Group>
     </Segment>
   );
-};
+});
+
